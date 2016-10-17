@@ -41,7 +41,7 @@ public class TransportConstants {
 
    public static final String HTTP_UPGRADE_ENABLED_PROP_NAME = "httpUpgradeEnabled";
 
-   public static final String HTTP_UPGRADE_ENDPOINT_PROP_NAME = "httpPpgradeEndpoint";
+   public static final String HTTP_UPGRADE_ENDPOINT_PROP_NAME = "httpUpgradeEndpoint";
 
    public static final String USE_SERVLET_PROP_NAME = "useServlet";
 
@@ -52,6 +52,8 @@ public class TransportConstants {
    public static final String USE_NIO_GLOBAL_WORKER_POOL_PROP_NAME = "useNioGlobalWorkerPool";
 
    public static final String USE_INVM_PROP_NAME = "useInvm";
+
+   public static final String ACTIVEMQ_SERVER_NAME = "activemqServerName";
 
    /**
     * @deprecated use PROTOCOLS_PROP_NAME
@@ -86,6 +88,8 @@ public class TransportConstants {
    public static final String ENABLED_PROTOCOLS_PROP_NAME = "enabledProtocols";
 
    public static final String NEED_CLIENT_AUTH_PROP_NAME = "needClientAuth";
+
+   public static final String VERIFY_HOST_PROP_NAME = "verifyHost";
 
    public static final String BACKLOG_PROP_NAME = "backlog";
 
@@ -155,6 +159,8 @@ public class TransportConstants {
 
    public static final boolean DEFAULT_NEED_CLIENT_AUTH = false;
 
+   public static final boolean DEFAULT_VERIFY_HOST = false;
+
    public static final boolean DEFAULT_TCP_NODELAY = true;
 
    public static final int DEFAULT_TCP_SENDBUFFER_SIZE = 32768;
@@ -187,6 +193,12 @@ public class TransportConstants {
 
    public static final String CONNECTION_TTL = "connectionTtl";
 
+   public static final String CONNECTION_TTL_MAX = "connectionTtlMax";
+
+   public static final String CONNECTION_TTL_MIN = "connectionTtlMin";
+
+   public static final String HEART_BEAT_TO_CONNECTION_TTL_MODIFIER = "heartBeatToConnectionTtlModifier";
+
    public static final String STOMP_ENABLE_MESSAGE_ID = "stomp-enable-message-id";
 
    public static final String STOMP_MIN_LARGE_MESSAGE_SIZE = "stomp-min-large-message-size";
@@ -200,7 +212,7 @@ public class TransportConstants {
    public static final long DEFAULT_CONNECTIONS_ALLOWED = -1L;
 
    static {
-      Set<String> allowableAcceptorKeys = new HashSet<String>();
+      Set<String> allowableAcceptorKeys = new HashSet<>();
       allowableAcceptorKeys.add(TransportConstants.SSL_ENABLED_PROP_NAME);
       allowableAcceptorKeys.add(TransportConstants.HTTP_RESPONSE_TIME_PROP_NAME);
       allowableAcceptorKeys.add(TransportConstants.HTTP_SERVER_SCAN_PERIOD_PROP_NAME);
@@ -220,6 +232,7 @@ public class TransportConstants {
       allowableAcceptorKeys.add(TransportConstants.ENABLED_CIPHER_SUITES_PROP_NAME);
       allowableAcceptorKeys.add(TransportConstants.ENABLED_PROTOCOLS_PROP_NAME);
       allowableAcceptorKeys.add(TransportConstants.NEED_CLIENT_AUTH_PROP_NAME);
+      allowableAcceptorKeys.add(TransportConstants.VERIFY_HOST_PROP_NAME);
       allowableAcceptorKeys.add(TransportConstants.TCP_NODELAY_PROPNAME);
       allowableAcceptorKeys.add(TransportConstants.TCP_SENDBUFFER_SIZE_PROPNAME);
       allowableAcceptorKeys.add(TransportConstants.TCP_RECEIVEBUFFER_SIZE_PROPNAME);
@@ -230,6 +243,9 @@ public class TransportConstants {
       allowableAcceptorKeys.add(TransportConstants.STOMP_CONSUMERS_CREDIT);
       allowableAcceptorKeys.add(TransportConstants.STOMP_MIN_LARGE_MESSAGE_SIZE);
       allowableAcceptorKeys.add(TransportConstants.CONNECTION_TTL);
+      allowableAcceptorKeys.add(TransportConstants.CONNECTION_TTL_MAX);
+      allowableAcceptorKeys.add(TransportConstants.CONNECTION_TTL_MIN);
+      allowableAcceptorKeys.add(TransportConstants.HEART_BEAT_TO_CONNECTION_TTL_MODIFIER);
       allowableAcceptorKeys.add(TransportConstants.STOMP_ENABLE_MESSAGE_ID);
       allowableAcceptorKeys.add(TransportConstants.CONNECTIONS_ALLOWED);
       allowableAcceptorKeys.add(ActiveMQDefaultConfiguration.getPropMaskPassword());
@@ -238,7 +254,8 @@ public class TransportConstants {
 
       ALLOWABLE_ACCEPTOR_KEYS = Collections.unmodifiableSet(allowableAcceptorKeys);
 
-      Set<String> allowableConnectorKeys = new HashSet<String>();
+      Set<String> allowableConnectorKeys = new HashSet<>();
+      allowableConnectorKeys.add(TransportConstants.ACTIVEMQ_SERVER_NAME);
       allowableConnectorKeys.add(TransportConstants.SSL_ENABLED_PROP_NAME);
       allowableConnectorKeys.add(TransportConstants.HTTP_ENABLED_PROP_NAME);
       allowableConnectorKeys.add(TransportConstants.HTTP_CLIENT_IDLE_PROP_NAME);
@@ -262,6 +279,7 @@ public class TransportConstants {
       allowableConnectorKeys.add(TransportConstants.TRUSTSTORE_PASSWORD_PROP_NAME);
       allowableConnectorKeys.add(TransportConstants.ENABLED_CIPHER_SUITES_PROP_NAME);
       allowableConnectorKeys.add(TransportConstants.ENABLED_PROTOCOLS_PROP_NAME);
+      allowableConnectorKeys.add(TransportConstants.VERIFY_HOST_PROP_NAME);
       allowableConnectorKeys.add(TransportConstants.TCP_NODELAY_PROPNAME);
       allowableConnectorKeys.add(TransportConstants.TCP_SENDBUFFER_SIZE_PROPNAME);
       allowableConnectorKeys.add(TransportConstants.TCP_RECEIVEBUFFER_SIZE_PROPNAME);
@@ -277,8 +295,7 @@ public class TransportConstants {
       Version v = Version.identify().get("netty-transport");
       if (v == null) {
          version = "unknown";
-      }
-      else {
+      } else {
          version = v.artifactVersion();
       }
       NETTY_VERSION = version;
