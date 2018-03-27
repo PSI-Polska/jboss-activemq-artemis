@@ -124,6 +124,17 @@
       <javac-compiler-id>javac-with-errorprone</javac-compiler-id>
    </properties>
 
+   <distributionManagement>
+      <repository>
+         <id>community-deploy</id>
+         <url>http://infra-bln-3-nexus2.psi.de:8081/nexus/content/repositories/COMREL/</url>
+      </repository>
+      <snapshotRepository>
+         <id>community-deploy</id>
+         <url>http://infra-bln-3-nexus2.psi.de:8081/nexus/content/repositories/COMSNAP/</url>
+      </snapshotRepository>
+   </distributionManagement>
+
    <scm>
       <connection>scm:git:http://git-wip-us.apache.org/repos/asf/activemq-artemis.git</connection>
       <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/activemq-artemis.git</developerConnection>
