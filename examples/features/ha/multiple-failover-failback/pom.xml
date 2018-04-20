@@ -24,7 +24,7 @@ under the License.
    <parent>
       <groupId>org.apache.activemq.examples.failover</groupId>
       <artifactId>broker-failover</artifactId>
-      <version>1.1.0.wildfly-024-2-PSI-SNAPSHOT</version>
+      <version>1.1.0.wildfly-024-2-PSI</version>
    </parent>
 
    <artifactId>multiple-failover-failback</artifactId>
